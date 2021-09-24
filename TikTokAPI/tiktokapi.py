@@ -67,11 +67,11 @@ class TikTokAPI(object):
         self.did_key = "did"
         self.tiktok_browser = TikTokBrowser(self.user_agent)
 
-    def send_get_request(self, url, params, extra_headers=None):
+    async def send_get_request(self, url, params, extra_headers=None):
         url = build_get_url(url, params)
         did = ''.join(random.choice(string.digits) for num in range(19))
         url = build_get_url(url, {self.did_key: did}, append=True)
-        signature = self.tiktok_browser.fetch_auth_params(url, language=self.language)
+        signature = await self.tiktok_browser.fetch_auth_params(url, language=self.language)
         url = build_get_url(url, {self.signature_key: signature}, append=True)
         if extra_headers is None:
             headers = self.headers
@@ -226,14 +226,14 @@ class TikTokAPI(object):
         extra_headers = {"Referer": "https://www.tiktok.com/music/original-sound-" + str(music_id)}
         return self.send_get_request(url, params, extra_headers=extra_headers)
 
-    def getVideoById(self, video_id):
+    async def getVideoById(self, video_id):
         url = self.base_url + "/item/detail/"
         params = {
             "itemId": str(video_id)
         }
         for key, val in self.default_params.items():
             params[key] = val
-        return self.send_get_request(url, params)
+        return await self.send_get_request(url, params)
 
     def downloadVideoById(self, video_id, save_path):
         video_info = self.getVideoById(video_id)

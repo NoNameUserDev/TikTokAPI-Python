@@ -1,3 +1,10 @@
+# What's changed:
+
+I've added my *video downloader function* in `video_downloader.py` and the library's video info getter, that is, `getVideoById` now works within an *async code* without error. Just small changes, nothing more.
+
+## Notes:
+
+Don't use proxies when using the `requests` library. I've used psiphon when I was testing this library. It was quite a headache to try to get the code work, but I just give up. And the headless chromium wouldn't start too because of proxies at 222nd line of the code — `get_ws_endpoint` in `launcher.py`.
 
 # Unofficial TikTok API Wrapper in Python
 
