@@ -235,8 +235,8 @@ class TikTokAPI(object):
             params[key] = val
         return await self.send_get_request(url, params)
 
-    def downloadVideoById(self, video_id, save_path):
-        video_info = self.getVideoById(video_id)
+    async def downloadVideoById(self, video_id, save_path):
+        video_info = await self.getVideoById(video_id)
         video_url = video_info["itemInfo"]["itemStruct"]["video"]["playAddr"]
         video_data = get_req_content(video_url, params=None, headers=self.headers)
         with open(save_path, 'wb') as f:
